@@ -1,9 +1,16 @@
 from pyspark.sql import SparkSession
 import pyspark.sql.functions as F
+import os
+import boto3
 
-# Replace with your own access key and secret key
-spark = SparkSession.builder.appName("transformation").config("spark.hadoop.fs.s3a.access.key", "ACCESS KEY") \ 
-    .config("spark.hadoop.fs.s3a.secret.key", "SECRET KEY") \
+access_key = os.getenv("access_key")
+
+client = boto3.client('secretsmanager')
+get_secret_value_response = client.get_secret_value(SecretId="s3-user")
+secret_key = get_secret_value_response['SecretString']
+
+spark = SparkSession.builder.appName("transformation").config("spark.hadoop.fs.s3a.access.key", access_key) \
+    .config("spark.hadoop.fs.s3a.secret.key", secret_key) \
     .config("spark.jars.packages", "io.delta:delta-core_2.12:2.3.0,org.apache.hadoop:hadoop-aws:3.3.2") \
     .config("spark.sql.catalog.spark_catalog","org.apache.spark.sql.delta.catalog.DeltaCatalog") \
     .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
@@ -26,3 +33,5 @@ print("highest tippers", taxi_journey.orderBy(taxi_journey['tip_percent'].desc()
 print("lowest tippers", taxi_journey.orderBy(taxi_journey['tip_percent']).select('VendorID', 'tip_percent', 'tip_amount').show(3))
 
 taxi_journey.write.parquet("s3a://my-taxi-bucket-1/yellow_tripdata_2024-01_journeys.parquet")
+
+spark.stop()
