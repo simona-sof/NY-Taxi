@@ -5,6 +5,7 @@ This project processes and transforms NYC taxi trip data using **PySpark**. It r
 ## Contents
 1. [Installation](#installation)
 2. [Usage](#usage)
+3. [Disclaimer](#disclaimer)
 
 ## Instalation
 
