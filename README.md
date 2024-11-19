@@ -1,6 +1,6 @@
 # NYC Taxi Data Pipeline
 
-This project processes and transforms NYC taxi trip data using **PySpark**. It reads taxi trip data from a Parquet file, calculates journey lengths and tip percentages, and then writes the results to an S3 bucket. The project also integrates with **AWS Secrets Manager** to securely access S3 credentials. Terraform files are provided to set up the necessary AWS infrastructure.
+This project processes and transforms NYC taxi trip data using **PySpark**. It reads taxi trip data from a Parquet file, calculates journey lengths and tip percentages, and then writes the results to an S3 bucket. The project also integrates with **AWS Secrets Manager** to securely access S3 credentials. Terraform files are provided to set up the necessary AWS infrastructure. The terraform state will be saved to the S3 bucket.
 
 ## Contents
 1. [Installation](#installation)
