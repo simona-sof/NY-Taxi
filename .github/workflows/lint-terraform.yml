@@ -21,8 +21,8 @@ jobs:
       with:
         terraform_version: 1.0.0
 
-    - name: Initialize Terraform
-      run: cd terraform && terraform init
+    # - name: Initialize Terraform
+    #   run: cd terraform && terraform init
 
     - name: Check Terraform formatting
       run: cd terraform && terraform fmt -check -recursive
